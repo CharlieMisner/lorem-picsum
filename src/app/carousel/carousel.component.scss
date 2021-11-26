@@ -1,0 +1,21 @@
+@import "../styles/colors";
+
+:host {
+    color: #aaaaaa;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.selected-picture {
+    width: 600px;
+    border: 4px solid $primary;
+}
+
+i {
+    cursor: pointer;
+    margin: 0 40px 0 40px;
+    &:hover {
+        color: #ffffff;
+    }
+}
