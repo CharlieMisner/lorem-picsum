@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { ImageLoadedDirective } from './carousel/image-loaded.directive';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CarouselComponent,
-    ImageLoadedDirective
+    ImageLoadedDirective,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

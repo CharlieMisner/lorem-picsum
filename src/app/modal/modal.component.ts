@@ -1,16 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { LoremPicsum } from '../header/interfaces';
-import { PictureService } from '../shared/picture.service';
+import { Component, OnInit } from '@angular/core';
 import { LoremPicsumService } from '../lorem-picsum.service';
+import { PictureService } from '../shared/picture.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs/operators'
 
 @Component({
-  selector: 'app-carousel',
-  templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss']
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.scss']
 })
-export class CarouselComponent implements OnInit {
+export class ModalComponent implements OnInit {
 
   public imageUrl$: Observable<any>;
   public imageLoading$: Observable<boolean>;
@@ -18,10 +17,10 @@ export class CarouselComponent implements OnInit {
   private readonly SHOWN = "selected-picture-shown";
   private readonly HIDDEN = "selected-picture-hidden";
 
-  constructor(public pictureService: PictureService, public loremPicsumService: LoremPicsumService) { }
+  constructor(public loremPicsum: LoremPicsumService, public pictureService: PictureService) { }
 
   ngOnInit(): void {
-    this.pictureService.initializeCarousel();
+    this.pictureService.setPictureLoading();
     this.imageUrl$ = this.pictureService.getImageUrl();
     this.imageLoading$ = this.pictureService.pictureLoading$;
     this.imageLoaded$ = this.pictureService.pictureLoaded$.pipe(map((loaded: boolean) => loaded ? this.SHOWN : this.HIDDEN));

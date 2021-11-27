@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoremPicsumService } from './lorem-picsum.service';
 import { LoremPicsum } from './header/interfaces';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   
-  public $pictures: Observable<LoremPicsum[]>;
+  public displayModal$: BehaviorSubject<boolean>;
 
   constructor(private loremPicsum: LoremPicsumService){}
 
   ngOnInit(){
-    this.$pictures = this.loremPicsum.getLoremPicsumImages();
+    this.displayModal$ = this.loremPicsum.displayModal$;
   }
 }

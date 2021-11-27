@@ -1,5 +1,7 @@
 @import "../styles/colors";
 
+$image-width: 600px;
+
 :host {
     color: #aaaaaa;
     display: flex;
@@ -7,9 +9,25 @@
     align-items: center;
 }
 
-.selected-picture {
-    width: 600px;
+.selected-picture-shown {
+    max-width: $image-width;
     border: 4px solid $primary;
+    cursor: pointer;
+}
+
+.selected-picture-hidden {
+    max-width: $image-width;
+    height: 0;
+    border: 0;
+}
+
+.image-container {
+    width: $image-width;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
 }
 
 i {

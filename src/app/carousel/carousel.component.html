@@ -1,3 +1,10 @@
-<i class="fas fa-angle-left fa-7x" (click)="this.carouselService.goToPreviousPhoto()"></i>
-<img class="selected-picture" src="{{imageUrl$ | async}}">
-<i class="fas fa-angle-right fa-7x" (click)="this.carouselService.goToNextPhoto()"></i>
+<i class="fas fa-angle-left fa-7x" (click)="this.pictureService.goToPreviousPhoto()"></i>
+<div class="image-container">
+    <img 
+        class="{{imageLoaded$ | async}}" 
+        src="{{imageUrl$ | async}}" 
+        (loaded)="this.pictureService.setPictureLoaded()"
+        (click)="this.loremPicsumService.openModal()">
+    <i class="fas fa-circle-notch fa-spin fa-7x" *ngIf="imageLoading$ | async"></i>
+</div>
+<i class="fas fa-angle-right fa-7x" (click)="this.pictureService.goToNextPhoto()"></i>

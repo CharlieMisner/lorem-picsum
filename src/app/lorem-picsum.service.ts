@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoremPicsum } from './header/interfaces';
 import { flatMap, filter, toArray, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class LoremPicsumService {
 
   private readonly LOREM_PICSUM_URL = "https://picsum.photos/list";
   private readonly ALEJANDRO_ESCAMILLA = "Alejandro Escamilla";
+  public displayModal$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { }
 
@@ -24,4 +25,13 @@ export class LoremPicsumService {
       toArray()
     )
   }
+
+  public openModal(){
+    this.displayModal$.next(true);
+  }
+
+  public closeModal(){
+    this.displayModal$.next(false);
+  }
+
 }

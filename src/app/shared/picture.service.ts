@@ -7,39 +7,54 @@ import { LoremPicsumService } from '../lorem-picsum.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CarouselService {
+export class PictureService {
 
   public currentPictureIndex$:BehaviorSubject<number> = new BehaviorSubject(0);
+  public pictureLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public pictureLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   private currentPictureIndex: number = 0;
   private pictureArrayLength: number = 0;
-  private pictures: LoremPicsum[] = [];
 
   constructor(private loremPicsumService: LoremPicsumService) { }
 
   public initializeCarousel(): void{
-    this.currentPictureIndex$.next(this.currentPictureIndex);
     this.loremPicsumService.getLoremPicsumImages().pipe(take(1)).subscribe((pictures: LoremPicsum[]) => this.pictureArrayLength = pictures.length)
   }
 
+  /**
+   * Increments current image index, if current index is last in array, sets to 0.
+   */
   public goToNextPhoto(): void{
+    this.setPictureLoading();
     if(this.currentPictureIndex < this.pictureArrayLength){
-      this.currentPictureIndex$.next(this.currentPictureIndex++);
+      this.currentPictureIndex++
+      this.currentPictureIndex$.next(this.currentPictureIndex);
     } else {
       this.currentPictureIndex$.next(0);
       this.currentPictureIndex = 0;
     }
   }
 
+  /**
+   * Decriments the current image index, if current index is 0, sets to last index.
+   */
   public goToPreviousPhoto(): void{
+    this.setPictureLoading();
     if(this.currentPictureIndex > 0){
-      this.currentPictureIndex$.next(this.currentPictureIndex--);
+      this.currentPictureIndex--
+      this.currentPictureIndex$.next(this.currentPictureIndex);
     } else {
       this.currentPictureIndex$.next(this.pictureArrayLength - 1);
       this.currentPictureIndex = this.pictureArrayLength - 1;
     }
   }
 
-
+  /**
+   * Generates a URL to get the picture for the current index
+   * @param currentPictureIndex
+   * @param allPictures 
+   */
   private getImageSourceString(currentPictureIndex: number | null, allPictures: LoremPicsum[] | null): string {
     if(currentPictureIndex != null && allPictures != null){
       const currentPicture = allPictures[currentPictureIndex];
@@ -57,4 +72,15 @@ export class CarouselService {
       map(([currentPictureIndex, allPictures]) => this.getImageSourceString(currentPictureIndex, allPictures))
     )
   }
+
+  public setPictureLoading(){
+    this.pictureLoading$.next(true);
+    this.pictureLoaded$.next(false);
+  }
+
+  public setPictureLoaded(){
+    this.pictureLoading$.next(false);
+    this.pictureLoaded$.next(true);
+  }
+
 }
