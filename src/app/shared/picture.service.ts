@@ -13,8 +13,8 @@ export class PictureService {
   public pictureLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public pictureLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  private currentPictureIndex: number = 0;
-  private pictureArrayLength: number = 0;
+  public currentPictureIndex: number = 0;
+  public pictureArrayLength: number = 0;
 
   constructor(private loremPicsumService: LoremPicsumService) { }
 
@@ -55,7 +55,7 @@ export class PictureService {
    * @param currentPictureIndex
    * @param allPictures 
    */
-  private getImageSourceString(currentPictureIndex: number | null, allPictures: LoremPicsum[] | null): string {
+  public getImageSourceString(currentPictureIndex: number | null, allPictures: LoremPicsum[] | null): string {
     if(currentPictureIndex != null && allPictures != null){
       const currentPicture = allPictures[currentPictureIndex];
       return `https://picsum.photos/id/${currentPicture.id}/${currentPicture.width}/${currentPicture.height}`;
